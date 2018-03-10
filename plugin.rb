@@ -1,7 +1,7 @@
 # name:ldap 
 # about: A plugin to provide ldap authentication. 
-# version: 0.3.5
-# authors: Jon Bake <jonmbake@gmail.com>
+# version: 0.3.6
+# authors: Jon Bake <jonmbake@gmail.com>, David Krcek <david@rotecodefraktion.de>
 
 enabled_site_setting :ldap_enabled
 
@@ -35,7 +35,9 @@ class LDAPAuthenticator < ::Auth::Authenticator
           # In 0.3.0, we fixed a typo in the ldap_bind_dn config name. This fallback will be removed in a future version.
           bind_dn: SiteSetting.ldap_bind_dn.presence || SiteSetting.try(:ldap_bind_db),
           password: SiteSetting.ldap_password,
-          filter: SiteSetting.ldap_filter
+          filter: SiteSetting.ldap_filter,
+          # rfc Update Groups
+          updategid: SiteSetting.update_gid
         )
       }
   end
